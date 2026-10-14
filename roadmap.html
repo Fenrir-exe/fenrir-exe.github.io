@@ -17,6 +17,7 @@
 :root {
   --deck: #3b2b1f;      /* палуба под фактурой */
   --paper: #f3e6c4;     /* лист листовки */
+  --paper-mid: #f9f2d9; /* середина листа (цвет текстуры panel) */
   --ink: #241a12;       /* тушь */
   --red: #b0281c;       /* красная рамка «розыска» */
   --rope: #c9a66b;      /* канат */
@@ -25,11 +26,12 @@
 }
 * { box-sizing: border-box; }
 html { background: var(--deck); }
-body { min-height: 100vh;
-  margin: 0; color: var(--ink); font: 400 19px/1.55 var(--body);
-  background:
-    linear-gradient(rgba(30, 20, 12, .38), rgba(30, 20, 12, .38)),
-    url("/assets/deck.webp") center top / 1600px auto repeat var(--deck);
+body { min-height: 100vh; margin: 0; color: var(--ink); font: 400 19px/1.55 var(--body); }
+/* Палуба — отдельный слой на весь экран: без повторов и швов на любой ширине; fixed-слой, а не
+   background-attachment (на телефонах тот не работает). */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background: linear-gradient(rgba(30, 20, 12, .38), rgba(30, 20, 12, .38)), url("/assets/deck.webp") center / cover no-repeat var(--deck);
 }
 a { color: var(--red); text-underline-offset: 3px; }
 a:focus-visible, .tag:focus-visible { outline: 3px solid var(--rope); outline-offset: 3px; }
@@ -65,7 +67,8 @@ a:focus-visible, .tag:focus-visible { outline: 3px solid var(--rope); outline-of
 /* Лист на палубе: 9-slice рваной бумаги (как `screen/panel` в игре) и два гвоздя. */
 .sheet {
   position: relative; max-width: 820px; margin: 40px auto 28px; padding: 44px clamp(22px, 5vw, 64px) 52px;
-  border: 32px solid transparent; border-image: url("/assets/panel.webp") 64 fill / 32px stretch;
+  border: 32px solid transparent; border-image: url("/assets/panel.webp") 64 / 32px round;
+  background: var(--paper-mid) padding-box;
   transform: rotate(-0.35deg); animation: pin .55s cubic-bezier(.2, .9, .3, 1.2) both;
   filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .45));
 }
