@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewill — конфиденциальность / Privacy</title>
+<style>
+  :root { --bg: #f4ecd8; --ink: #2b2118; --muted: #6b5a48; --line: #d8c9a8; --accent: #9e2a1c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1d1a16; --ink: #ece3d0; --muted: #b3a48c; --line: #3a332a; --accent: #e07a5f; }
+  }
+  body { background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif;
+         max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 30px; margin: 0 0 4px; } h2 { font-size: 21px; margin: 28px 0 6px; }
+  .meta { color: var(--muted); font-size: 14px; } nav { margin: 12px 0 24px; font-size: 15px; }
+  a { color: var(--accent); } hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+  ul { padding-left: 22px; } li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav><a href="#ru">Русский</a> · <a href="#en">English</a> · <a href="/">Tidewill</a></nav>
+
+<section id="ru" lang="ru">
+<h1>Политика конфиденциальности</h1>
+<p class="meta">Tidewill · версия от 14 октября 2026</p>
+
+<p>Tidewill — некоммерческая фан-игра, которую делает один человек под ником fenrir-exe. Денег игра не берёт, рекламы и сторонней аналитики в ней нет, данные никому не продаются. Вопросы и запросы — на <a href="mailto:alex.op.game.sup@gmail.com">alex.op.game.sup@gmail.com</a>.</p>
+
+<h2>Аккаунт необязателен</h2>
+<p>Играть можно без аккаунта: офлайн-игра ничего на сервер не отправляет. Аккаунт нужен только для онлайн-режимов.</p>
+
+<h2>Что хранится, если вы создали аккаунт</h2>
+<ul>
+  <li>адрес почты и отметка, подтверждён ли он;</li>
+  <li>хеш пароля (Argon2id; сам пароль не хранится) — если вы входите паролем;</li>
+  <li>идентификатор аккаунта Google — если вы входите через Google;</li>
+  <li>служебное: дата создания, сессии входа (хранится только хеш ключа сессии; сессия живёт 30 дней с последнего использования), коды из писем (только хеш, код действует 10 минут, запись удаляется через 2 суток).</li>
+</ul>
+<p>IP-адрес в базу не записывается: сервер держит его только в памяти, чтобы ограничить число попыток входа. Журналы сервера не содержат ни почты, ни IP.</p>
+
+<h2>Где хранится</h2>
+<ul>
+  <li>Сервер — у хостинга Webdock в Дании (ЕС).</li>
+  <li>Резервные копии: снимки хостинга (ЕС) и ежедневная копия базы у разработчика на его компьютерах (вне ЕС) — хранится 30 дней.</li>
+</ul>
+
+<h2>Кто ещё участвует</h2>
+<ul>
+  <li><b>Resend</b> отправляет письма с кодом подтверждения и сброса пароля: получает адрес и текст письма. Письма уходят из Ирландии (ЕС), служебные данные о письмах Resend хранит в США.</li>
+  <li><b>Google</b> — только если вы входите через Google: Google узнаёт, что вы входите в Tidewill, а игра получает от него только ваш адрес почты и идентификатор аккаунта.</li>
+  <li><b>Webdock</b> — хостинг сервера.</li>
+</ul>
+
+<h2>Логи партий плейтеста</h2>
+<p>Это отдельная история с отдельным согласием в игре (кнопка «Логи»). Логи не содержат почты, имени и IP и не связаны с аккаунтом.</p>
+
+<h2>Удаление и ваши права</h2>
+<p>Удалить аккаунт можно в игре: «Аккаунт» → «Удалить аккаунт». Почта, хеш пароля и идентификатор Google стираются сразу, остаётся только обезличенная запись; копии у разработчика обновляются каждый день и хранятся 30 дней, снимки хостинга обновляются по его циклу. Можно и написать на почту выше. Вы вправе узнать, какие данные о вас хранятся, исправить или удалить их, а также пожаловаться в надзорный орган (в Дании — Datatilsynet).</p>
+
+<h2>Если сервер остановится</h2>
+<p>Если проект придётся остановить, данные остаются только в резервной копии до возможного перезапуска и удаляются по вашему запросу.</p>
+
+<h2>Изменения</h2>
+<p>О существенных изменениях будет сказано здесь, дата версии — вверху страницы.</p>
+</section>
+
+<hr>
+
+<section id="en" lang="en">
+<h1>Privacy policy</h1>
+<p class="meta">Tidewill · version of 14 October 2026</p>
+
+<p>Tidewill is a non-commercial fan game made by one person under the nickname fenrir-exe. The game takes no money, has no ads and no third-party analytics, and no data is sold. Questions and requests: <a href="mailto:alex.op.game.sup@gmail.com">alex.op.game.sup@gmail.com</a>.</p>
+
+<h2>An account is optional</h2>
+<p>You can play without an account: offline play sends nothing to the server. An account is only needed for online modes.</p>
+
+<h2>What is stored if you create an account</h2>
+<ul>
+  <li>your e-mail address and whether it is confirmed;</li>
+  <li>a password hash (Argon2id; the password itself is not stored) — if you sign in with a password;</li>
+  <li>your Google account ID — if you sign in with Google;</li>
+  <li>technical data: creation date, sign-in sessions (only a hash of the session key is stored; a session lasts 30 days from last use), e-mail codes (hash only, a code is valid for 10 minutes, the record is deleted after 2 days).</li>
+</ul>
+<p>Your IP address is not written to the database: the server keeps it in memory only, to limit sign-in attempts. Server logs contain neither e-mail addresses nor IPs.</p>
+
+<h2>Where it is stored</h2>
+<ul>
+  <li>The server is hosted by Webdock in Denmark (EU).</li>
+  <li>Backups: hosting snapshots (EU) and a daily copy of the database on the developer's own computers (outside the EU), kept for 30 days.</li>
+</ul>
+
+<h2>Who else is involved</h2>
+<ul>
+  <li><b>Resend</b> sends the confirmation and password reset e-mails: it receives the address and the text of the e-mail. E-mails are sent from Ireland (EU); Resend keeps technical data about e-mails in the USA.</li>
+  <li><b>Google</b> — only if you sign in with Google: Google learns that you are signing in to Tidewill, and the game receives only your e-mail address and account ID from it.</li>
+  <li><b>Webdock</b> — server hosting.</li>
+</ul>
+
+<h2>Playtest match logs</h2>
+<p>These are separate and have their own consent in the game (the "Logs" button). Logs contain no e-mail, name or IP and are not linked to your account.</p>
+
+<h2>Deletion and your rights</h2>
+<p>You can delete your account in the game: "Account" → "Delete account". Your e-mail, password hash and Google ID are erased immediately, only an anonymous record remains; the developer's copies are refreshed daily and kept for 30 days, hosting snapshots are refreshed on the host's schedule. You can also write to the address above. You have the right to know what data about you is stored, to correct or delete it, and to complain to a supervisory authority (in Denmark — Datatilsynet).</p>
+
+<h2>If the server stops</h2>
+<p>If the project has to stop, the data stays only in a backup until a possible restart and is deleted at your request.</p>
+
+<h2>Changes</h2>
+<p>Significant changes will be announced here; the version date is at the top of the page.</p>
+</section>
+</body>
+</html>
