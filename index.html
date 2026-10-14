@@ -4,19 +4,133 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tidewill</title>
+<meta name="description" content="Tidewill — неофициальная некоммерческая фан-игра по One Piece: коллекционная карточная игра для компьютера.">
+<link rel="alternate" hreflang="en" href="/en/">
+<link rel="preload" href="/assets/russo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  :root { --bg: #f4ecd8; --ink: #2b2118; --muted: #6b5a48; --accent: #9e2a1c; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #1d1a16; --ink: #ece3d0; --muted: #b3a48c; --accent: #e07a5f; } }
-  body { background: var(--bg); color: var(--ink); font: 18px/1.6 Georgia, "Times New Roman", serif;
-         max-width: 640px; margin: 0 auto; padding: 64px 16px; }
-  h1 { font-size: 40px; margin: 0 0 8px; } p { margin: 10px 0; } .muted { color: var(--muted); }
-  a { color: var(--accent); }
+/* Сайт tidewill.net (ADR-0055) — продолжение главного меню игры: море с кораблём сверху, канат
+   борта, палуба, на ней прибитый рваный лист. Всё своё: ассеты UI-набора игры и её шрифты, без
+   внешних запросов (политика конфиденциальности). */
+@font-face { font-family: "Russo One"; src: url("/assets/russo.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Fira Sans Condensed"; src: url("/assets/fira-regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Fira Sans Condensed"; src: url("/assets/fira-bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+:root {
+  --deck: #3b2b1f;      /* палуба под фактурой */
+  --paper: #f3e6c4;     /* лист листовки */
+  --ink: #241a12;       /* тушь */
+  --red: #b0281c;       /* красная рамка «розыска» */
+  --rope: #c9a66b;      /* канат */
+  --head: "Russo One", "Arial Black", Impact, sans-serif;
+  --body: "Fira Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--deck); }
+body { min-height: 100vh;
+  margin: 0; color: var(--ink); font: 400 19px/1.55 var(--body);
+  background:
+    linear-gradient(rgba(30, 20, 12, .38), rgba(30, 20, 12, .38)),
+    url("/assets/deck.webp") center top / 1600px auto repeat var(--deck);
+}
+a { color: var(--red); text-underline-offset: 3px; }
+a:focus-visible, .tag:focus-visible { outline: 3px solid var(--rope); outline-offset: 3px; }
+
+/* Море с кораблём — первое, что видно, как в меню игры. */
+.sea {
+  position: relative; min-height: var(--sea-h, 34vh);
+  background: url("/assets/strip-2400.webp") 68% 40% / cover no-repeat #2a77b5;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 18px max(16px, calc((100vw - 1080px) / 2)) 22px;
+}
+@media (max-width: 900px) { .sea { background-image: url("/assets/strip-1200.webp"); } }
+.sea.short { --sea-h: 150px; }
+.sea nav { display: flex; flex-wrap: wrap; gap: 6px 4px; justify-content: flex-end; }
+.tag {
+  display: inline-block; padding: 9px 22px 11px; min-width: 96px; text-align: center;
+  border: 14px solid transparent; border-image: url("/assets/tag.webp") 56 fill / 14px stretch;
+  color: var(--ink); text-decoration: none; font: 700 17px/1 var(--body);
+}
+.tag:hover, .tag[aria-current] { border-image-source: url("/assets/tag-hover.webp"); color: var(--red); }
+.brand {
+  font: 400 clamp(56px, 11vw, 132px)/0.95 var(--head); color: #fbf3df; text-decoration: none;
+  -webkit-text-stroke: 0.06em var(--ink); paint-order: stroke fill; letter-spacing: 0.01em;
+  text-shadow: 0 0.06em 0 var(--ink);
+}
+.sea.short .brand { font-size: clamp(36px, 6vw, 56px); }
+.tagline {
+  margin: 10px 0 0; max-width: 34em; font: 700 21px/1.35 var(--body); color: #fbf3df;
+  -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill;
+}
+.rope { height: 24px; background: url("/assets/rope.webp") left center / auto 24px repeat-x; }
+
+/* Лист на палубе: 9-slice рваной бумаги (как `screen/panel` в игре) и два гвоздя. */
+.sheet {
+  position: relative; max-width: 820px; margin: 40px auto 28px; padding: 44px clamp(22px, 5vw, 64px) 52px;
+  border: 32px solid transparent; border-image: url("/assets/panel.webp") 64 fill / 32px stretch;
+  transform: rotate(-0.35deg); animation: pin .55s cubic-bezier(.2, .9, .3, 1.2) both;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .45));
+}
+.sheet::before, .sheet::after {
+  content: ""; position: absolute; top: -14px; width: 24px; height: 24px;
+  background: url("/assets/nail.webp") center / contain no-repeat;
+}
+.sheet::before { left: -12px; } .sheet::after { right: -12px; }
+@keyframes pin { from { opacity: 0; transform: translateY(-18px) rotate(-1.6deg); } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+.sheet > :first-child { margin-top: 0; }
+.sheet h1 { font: 400 clamp(32px, 5vw, 44px)/1.1 var(--head); margin: 0 0 18px; }
+.sheet h2 { font: 400 23px/1.25 var(--head); margin: 34px 0 8px; }
+.sheet p, .sheet li { max-width: 66ch; }
+.sheet ul { padding-left: 1.2em; } .sheet li { margin: 5px 0; }
+.sheet li::marker { color: var(--red); }
+
+/* План — маршрут: отметки идут по порядку, это и есть последовательность. */
+.sheet ul.route { list-style: none; padding: 0 0 0 34px; margin: 8px 0 0; border-left: 3px dashed var(--ink); }
+.route li { position: relative; margin: 0 0 14px; }
+.route li::before {
+  content: ""; position: absolute; left: -46px; top: 5px; width: 18px; height: 18px; border-radius: 50%;
+  border: 3px solid var(--ink); background: var(--paper);
+}
+.route.done li::before { background: var(--ink); }
+.route.now li::before { border-color: var(--red); background: var(--red); box-shadow: 0 0 0 4px var(--paper), 0 0 0 7px var(--red); }
+
+/* «Скоро» — оттиск штампа, как печать на недоступных листовках меню. */
+.stamp {
+  display: inline-block; margin: 6px 0 22px; padding: 6px 22px; transform: rotate(-6deg);
+  font: 400 44px/1 var(--head); color: var(--red); border: 5px double var(--red); border-radius: 6px;
+  opacity: .88; letter-spacing: .04em;
+}
+
+footer { max-width: 820px; margin: 0 auto; padding: 8px 16px 48px; color: #e9dcc0; font-size: 15px; }
+footer p { margin: 6px 0; max-width: 72ch; }
+footer a { color: #f4c58f; }
+footer .links a { margin-right: 18px; }
+@media (max-width: 600px) {
+  body { font-size: 18px; }
+  .sea { --sea-h: 260px; } .sea.short { --sea-h: 120px; }
+  .sea nav { justify-content: flex-start; }
+  .tag { min-width: 0; padding: 7px 12px 9px; font-size: 15px; }
+  .sheet { margin: 26px 8px 20px; border-width: 22px; border-image-width: 22px; }
+}
 </style>
 </head>
 <body>
-<h1>Tidewill</h1>
-<p>Некоммерческая фан-игра: коллекционная карточная игра для компьютера. Идёт закрытый тест.</p>
-<p lang="en" class="muted">A non-commercial fan game: a collectible card game for desktop. Closed testing in progress.</p>
-<p><a href="/privacy">Конфиденциальность / Privacy</a> · <a href="mailto:alex.op.game.sup@gmail.com">alex.op.game.sup@gmail.com</a></p>
+<header class="sea ">
+  <nav aria-label="Разделы"><a class="tag" href="/devlog">Дневник</a><a class="tag" href="/roadmap">План</a><a class="tag" href="/faq">Вопросы</a><a class="tag" href="/credits">Авторы</a><a class="tag" href="/download">Скачать</a><a class="tag" href="/en/" hreflang="en" lang="en">EN</a></nav>
+  <div>
+    <a class="brand" href="/">Tidewill</a>
+    <p class="tagline">Коллекционная карточная игра по миру One Piece — неофициальная некоммерческая фан-игра.</p>
+  </div>
+</header>
+<div class="rope" role="presentation"></div>
+<main class="sheet">
+<h1>Об игре</h1>
+<p>Коллекционная карточная игра для компьютера по миру One Piece — <strong>неофициальная и некоммерческая фан-игра</strong>. Её делает один человек; игра бесплатна, денег проект не принимает.</p>
+<h2>Что уже есть</h2>
+<ul><li>партии против ИИ трёх уровней сложности и тренировка;</li><li>обучающая партия для первого знакомства;</li><li>коллекция и редактор колод с поиском по картам;</li><li>русский и английский языки, Windows и Linux.</li></ul>
+<h2>Что дальше</h2>
+<p>Сейчас идёт закрытый тест среди знакомых. Потом — онлайн-дуэли, кампания по аркам и обмен картами. Подробнее — в <a href="/roadmap">плане</a>, как всё делается — в <a href="/devlog">дневнике</a>.</p>
+<p>Скачать игру можно будет с открытой альфой — страница <a href="/download">«Скачать»</a>.</p>
+</main>
+<footer><p>Tidewill — неофициальная некоммерческая фан-игра. Не связана с Eiichiro Oda, Shueisha, Toei Animation и Bandai и не одобрена ими; права на One Piece принадлежат правообладателям. Игра бесплатна. Арт, звуки и музыка созданы с помощью ИИ.</p><p class="links"><a href="/privacy">Конфиденциальность</a><a href="mailto:alex.op.game.sup@gmail.com">alex.op.game.sup@gmail.com</a></p></footer>
 </body>
 </html>
